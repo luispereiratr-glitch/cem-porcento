@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--fonte-corpo), ui-sans-serif, system-ui, sans-serif;
+  --font-titulo: var(--fonte-titulo), ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme {
+  --color-fundo: #090d18;
+  --color-fundo-2: #0f1528;
+  --color-cartao: #141b31;
+  --color-cartao-2: #1c2543;
+  --color-linha: #2a365e;
+  --color-texto: #f1f4ff;
+  --color-texto-2: #98a4c8;
+  --color-fogo: #ff8a1f;
+  --color-fogo-escuro: #b85400;
+  --color-ciano: #2fc6ff;
+  --color-ciano-escuro: #0c7fb0;
+  --color-neon: #35e08c;
+  --color-neon-escuro: #129455;
+  --color-ouro: #ffcc3d;
+  --color-ouro-escuro: #b98600;
+  --color-rosa: #ff5c9d;
+  --color-rosa-escuro: #b82863;
+  --color-roxo: #a487ff;
+  --color-roxo-escuro: #6548cc;
+  --color-erro: #ff5263;
+  --color-erro-escuro: #a82232;
+
+  --animate-subir: subir 0.28s ease-out both;
+  --animate-pulo: pulo 0.4s ease-out both;
+  --animate-tremer: tremer 0.3s ease-in-out both;
+  --animate-flutuar: flutuar 1.6s ease-in-out infinite;
+  --animate-estourar: estourar 0.25s ease-out both;
+  --animate-voar: voar 0.9s ease-out both;
+
+  @keyframes subir {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulo {
+    0% { transform: scale(0.85); }
+    60% { transform: scale(1.06); }
+    100% { transform: scale(1); }
+  }
+  @keyframes tremer {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+  @keyframes flutuar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  @keyframes estourar {
+    to { opacity: 0; transform: scale(1.6); }
+  }
+  /* Número de dano ou de pontos que sobe e some. */
+  @keyframes voar {
+    from { opacity: 1; transform: translateY(0) scale(1); }
+    to { opacity: 0; transform: translateY(-48px) scale(1.25); }
+  }
+}
+
+/* Estas duas são usadas direto no estilo dos elementos, com a duração calculada pelo jogo. */
+
+/* Caixa caindo na Chuva de Caixas. */
+@keyframes cair {
+  from { top: -64px; }
+  to { top: 100%; }
+}
+
+/* Barra de tempo do turno, no duelo. */
+@keyframes esvaziar {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
+html {
+  background-color: var(--color-fundo);
+  /* Brilho no topo e uma malha discreta, para dar cara de tela de jogo. */
+  background-image:
+    radial-gradient(ellipse 90% 45% at 50% -10%, color-mix(in srgb, var(--color-ciano) 16%, transparent), transparent),
+    linear-gradient(color-mix(in srgb, var(--color-linha) 22%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-linha) 22%, transparent) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px, 32px 32px;
+  background-attachment: fixed;
+  color: var(--color-texto);
+  color-scheme: dark;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-titulo);
+  letter-spacing: 0.01em;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ciano);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* As animações de jogo (queda das caixas, tempo do turno) fazem parte da regra e continuam. */
+  *:not([data-jogo]) {
+    animation: none !important;
+    transition: none !important;
+  }
+}
